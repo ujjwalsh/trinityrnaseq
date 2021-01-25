@@ -14,15 +14,19 @@ matrix:
     - language: perl
       perl: "5.26-shrplib"
       env: CC=gcc-8 CXX=g++-8
+      arch: amd64
     # https://docs.travis-ci.com/user/languages/java/
     - language: java
       jdk: oraclejdk9
       env: CC=gcc-6 CXX=g++-6
+      arch: amd64
     # https://docs.travis-ci.com/user/languages/python/
     - language: python
       python: "3.6"
+      arch: amd64
     - language: generic
       env: CC=clang-3.9 CXX=clang++-3.9 LDFLAGS="-fopenmp=libiomp5"
+      arch: amd64
       addons:
         apt:
           sources:
@@ -34,6 +38,7 @@ matrix:
     - language: generic
       # Open MP support is available from clang-3.7.
       env: CC=clang-3.7 CXX=clang++-3.7 LDFLAGS="-fopenmp=libiomp5"
+      arch: amd64
       addons:
         apt:
           sources:
@@ -46,8 +51,51 @@ matrix:
     - language: perl
       perl: "5.18-shrplib"
       env: BOWTIE2_VERSION=2.2.6
+      arch: amd64
       if: *secondary
     # https://docs.travis-ci.com/user/reference/osx
+    - language: perl
+      perl: "5.26-shrplib"
+      env: CC=gcc-8 CXX=g++-8
+      arch: ppc64le
+    # https://docs.travis-ci.com/user/languages/java/
+    - language: java
+      jdk: oraclejdk9
+      env: CC=gcc-6 CXX=g++-6
+      arch: ppc64le
+    # https://docs.travis-ci.com/user/languages/python/
+    - language: python
+      python: "3.6"
+      arch: ppc64le
+    - language: generic
+      env: CC=clang-3.9 CXX=clang++-3.9 LDFLAGS="-fopenmp=libiomp5"
+      arch: ppc64le
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.9
+          packages:
+            - clang-3.9
+      if: *secondary
+    - language: generic
+      # Open MP support is available from clang-3.7.
+      env: CC=clang-3.7 CXX=clang++-3.7 LDFLAGS="-fopenmp=libiomp5"
+      arch: ppc64le
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.7
+          packages:
+            - clang-3.7
+      if: *secondary
+    # Test old version of the dependency packages.
+    - language: perl
+      perl: "5.18-shrplib"
+      env: BOWTIE2_VERSION=2.2.6
+      arch: ppc64le 
+      if: *secondary
     - os: osx
       osx_image: xcode9.4
       env: CC=gcc-8 CXX=g++-8
